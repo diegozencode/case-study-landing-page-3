@@ -48,7 +48,7 @@
           </h3>
           <div class="grid grid-cols-1 gap-6">
             <button
-              id="btn-under-61"
+              id="btn-under-64"
               class="flex justify-center bg-green-500 hover:bg-green-500 tracking-wide text-white font-bold rounded-2xl w-3/4 mx-auto border-b-2 border-green-500 uppercase shadow-md md:py-6 py-4 md:text-2xl px-6 items-center"
             >
               Under 64
@@ -85,6 +85,20 @@
               No
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+    <!-- under 64 -->
+    <div
+      id="display3"
+      class="hidden hidden mx-auto md:pt-4 pt-1 px-4 md:px-0 max-w-5xl container"
+    >
+      <div
+        class="p-6 border-t-2 border-blue-500 mt-4 bg-gray-300 text-center shadow-xl"
+      >
+        <h3 class="text-xl md:text-2xl font-bold text-red-500 mb-4">
+          Sorry You Do Not Qualify
+        </h3>
         </div>
       </div>
     </div>
@@ -202,5 +216,135 @@
         <p>Copyright Golden Years Benefits © 2024 - All right reserved</p>
       </div>
     </footer>
+    <script>
+      const btn1 = document.getElementById("btn-1");
+      const btn2 = document.getElementById("btn-2");
+      const btnUnder64 = document.getElementById("btn-under-64");
+      const btnYes = document.getElementById("btn-yes");
+      const btnNo = document.getElementById("btn-no");
+
+      const mainContainer = document.getElementById("mainContainer");
+      const display1 = document.getElementById("display1");
+      const display2 = document.getElementById("display2");
+      const display3 = document.getElementById("display3");
+      const display4 = document.getElementById("display4");
+
+      // PROGRESS BAR
+      const progressContainer = document.getElementById("progress-container");
+      const progressBarContainer = document.querySelector(
+        ".progress-bar__container"
+      );
+      const progressBar = document.querySelector(".progress-bar");
+      const progressBarText = document.querySelector(".progress-bar__text");
+      const progressText1 = document.getElementById("progress-text-1");
+      const progressText2 = document.getElementById("progress-text-2");
+      const progressText3 = document.getElementById("progress-text-3");
+
+      const runProgress = () => {
+        const progressBarStates = [25, 50, 75, 100];
+
+        let time = -1000;
+        let endState = 100;
+
+        progressBarStates.forEach((state) => {
+          let randomTime = 1000;
+          console.log("state:", state);
+
+          setTimeout(() => {
+            if (state == endState) {
+              gsap.to(progressBar, {
+                x: `${state}%`,
+                duration: 1,
+                backgroundColor: "#30bd51",
+                onComplete: () => {
+                  // progressBarText.style.display = "initial";
+                  progressBarContainer.style.boxShadow = "0 0 5px #30bd51";
+                  progressContainer.style.display = "none";
+                  display4.style.display = "block";
+                },
+              });
+            } else {
+              gsap.to(progressBar, {
+                x: `${state}%`,
+                duration: 1,
+              });
+              console.log("currentState:", state);
+
+              if (state === 25) {
+                progressText1.style.display = "block";
+              }
+              if (state === 50) {
+                progressText1.style.display = "none";
+                progressText2.style.display = "block";
+              }
+              if (state === 75) {
+                progressText1.style.display = "none";
+                progressText2.style.display = "none";
+                progressText3.style.display = "block";
+              }
+            }
+          }, randomTime + time);
+          time += randomTime;
+        });
+      };
+
+      // console.log("btn1::", btn1)
+      btn1.addEventListener("click", () => {
+        display1.style.display = "none";
+        display2.style.display = "block";
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set("age", "64");
+        window.history.pushState(
+          {
+            path: newUrl.href,
+          },
+          "",
+          newUrl.href
+        );
+
+        setZip();
+        setRtClickId();
+      });
+
+      btn2.addEventListener("click", () => {
+        display1.style.display = "none";
+        display2.style.display = "block";
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set("age", "76");
+        window.history.pushState(
+          {
+            path: newUrl.href,
+          },
+          "",
+          newUrl.href
+        );
+
+        setZip();
+        setRtClickId();
+      });
+
+      btnUnder64.addEventListener("click", () => {
+        display1.style.display = "none";
+        mainContainer.style.display = "none";
+        display3.style.display = "block";
+      });
+
+      btnYes.addEventListener("click", () => {
+        display2.style.display = "none";
+        runProgress();
+        mainContainer.style.display = "none";
+        progressContainer.style.display = "block";
+
+        loadRingba();
+        runCountdownTimer();
+        scrollToTop();
+      });
+
+      btnNo.addEventListener("click", () => {
+        display2.style.display = "none";
+        window.location.href = "<?php echo $mbOfferSite; ?>";
+        display5.style.display = "block";
+      });
+    </script>
   </body>
 </html>
