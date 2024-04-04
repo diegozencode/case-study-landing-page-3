@@ -119,12 +119,11 @@
           Don't miss out - Speak to an official agent to claim your benefit card
           now.
         </p>
-        <a href="tel:<?php echo $ringbaNumberPrimaryTel; ?>">
+        <a href="#">
           <button
             class="capitalize font-bold bg-green-500 animate__animated animate__pulse animate__infinite text-white my-4 p-5 shadow-2xl md:text-2xl text-base"
           >
-            Click to Call
-            <?php echo $ringbaNumberPrimary; ?>
+            Click to Call +1 (844) 487-0575
           </button>
         </a>
         <p class="mb-4">
@@ -215,6 +214,27 @@
       </div>
     </footer>
     <script>
+      const runCountdownTimer = () => {
+        var now = new Date().getTime();
+        var countDownDate = new Date(now + 3 * 60000).getTime();
+
+        setInterval(function () {
+          var now = new Date().getTime();
+
+          var distance = countDownDate - now;
+
+          var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          document.getElementById("time").innerHTML = minutes + ":" + seconds;
+
+          if (distance < 0) {
+            clearInterval(x);
+            document.getElementById("time").innerHTML = "EXPIRED";
+          }
+        }, 500);
+      };
+
       const btn1 = document.getElementById("btn-1");
       const btn2 = document.getElementById("btn-2");
       const btnUnder64 = document.getElementById("btn-under-64");
@@ -299,9 +319,6 @@
           "",
           newUrl.href
         );
-
-        setZip();
-        setRtClickId();
       });
 
       btn2.addEventListener("click", () => {
@@ -316,9 +333,6 @@
           "",
           newUrl.href
         );
-
-        setZip();
-        setRtClickId();
       });
 
       btnUnder64.addEventListener("click", () => {
@@ -333,14 +347,12 @@
         mainContainer.style.display = "none";
         progressContainer.style.display = "block";
 
-        loadRingba();
         runCountdownTimer();
-        scrollToTop();
       });
 
       btnNo.addEventListener("click", () => {
         display2.style.display = "none";
-        window.location.href = "<?php echo $mbOfferSite; ?>";
+        window.location.href = "Error";
         display5.style.display = "block";
       });
     </script>
